@@ -11,7 +11,12 @@ Your goal is to:
 - Evaluate what your system gets right and wrong
 - Reflect on how this mirrors real world AI recommenders
 
-Replace this paragraph with your own summary of what your version does.
+My version, **VibeMatch 1.0**, is a small rule-based recommender. It takes a short
+taste profile (favorite genre, favorite mood, and a target energy level) and scores
+every song in a 10-song catalog against it: big points for a genre match, some for a
+mood match, and extra points for how *close* a song's energy is to what the user
+wants. It then ranks all songs by score and returns the top few, each with a
+plain-language reason for why it was picked.
 
 ---
 
@@ -181,23 +186,32 @@ Because: energy 0.91 vs target 0.80 (+0.89)
 
 ## Experiments You Tried
 
-Use this section to document the experiments you ran. For example:
-
-- What happened when you changed the weight on genre from 2.0 to 0.5
-- What happened when you added tempo or valence to the score
-- How did your system behave for different types of users
+- **Stress-tested four profiles.** I ran High-Energy Pop, Chill Lofi, Deep Intense
+  Rock, and an adversarial "high-energy but sad" profile. Opposite profiles (pop vs.
+  lofi) returned almost entirely different lists, confirming the scorer reacts to
+  preferences rather than returning a fixed set.
+- **Shifted the weights (genre 2.0 → 1.0, energy 1.0 → 2.0).** The top pick barely
+  changed, but the score *gaps* compressed — a pure energy-match jumped from 0.99 to
+  1.98 for the pop user, making non-genre songs far more competitive. On this tiny
+  catalog the change made results more *different* than clearly more *accurate*.
+- **Observed the "Gym Hero" effect.** Because a genre match is worth double a mood
+  match, the intense workout track *Gym Hero* keeps ranking #2 for a user who just
+  wants happy pop — a sign the genre weight may be too strong for the catalog size.
 
 ---
 
 ## Limitations and Risks
 
-Summarize some limitations of your recommender.
-
-Examples:
-
-- It only works on a tiny catalog
-- It does not understand lyrics or language
-- It might over favor one genre or mood
+- **Tiny, skewed catalog.** Only 10 songs, lightly weighted toward pop and lofi, so
+  each genre has just one or two examples and there is little variety within a taste.
+- **Over-favors genre.** A genre match (+2.0) can beat a song that matches the user's
+  mood and energy but sits in another genre — great cross-genre picks get buried.
+- **Exact-match only.** "indie pop" earns zero genre points for a "pop" fan, and
+  "chill" ≠ "relaxed", so close-but-not-identical tastes are punished.
+- **No real understanding.** It reads labels and numbers only — it doesn't understand
+  lyrics, language, or why a song *feels* a certain way.
+- **Filter-bubble risk.** It only rewards matching known taste, so it never surfaces
+  anything new and can trap a listener in a narrow bubble.
 
 You will go deeper on this in your model card.
 
@@ -209,10 +223,21 @@ Read and complete `model_card.md`:
 
 [**Model Card**](model_card.md)
 
-Write 1 to 2 paragraphs here about what you learned:
+Building this made it concrete that a recommender is really just "score everything,
+then sort" — there's no magic, only a scorecard and a ranking. Each song becomes a
+handful of numbers and labels, the user becomes a set of preferences, and a
+prediction is just the total points a song earns for lining up with those
+preferences. Seeing the reasons printed next to each pick made the whole pipeline
+feel transparent instead of mysterious.
 
-- about how recommenders turn data into predictions
-- about where bias or unfairness could show up in systems like this
+What surprised me most was how quietly the **weights** steer everything. Because I
+made a genre match worth double a mood match, a workout song kept surfacing for
+users who only wanted happy pop — I never told it to do that, the weighting did.
+That's exactly where bias and unfairness sneak in: whichever signal the designer
+decides to weight most heavily gets amplified, underrepresented genres get ignored,
+and users can be quietly funneled toward the same narrow set of songs. It changed how
+I think about the music apps I use every day — they're reflecting design choices,
+not truly understanding me.
 
 
 
