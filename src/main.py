@@ -9,11 +9,15 @@ You will implement the functions in recommender.py:
 - recommend_songs
 """
 
-from recommender import load_songs, recommend_songs
+try:
+    from src.recommender import load_songs, recommend_songs
+except ImportError:  # when run from inside src/ (e.g. `python main.py`)
+    from recommender import load_songs, recommend_songs
 
 
 def main() -> None:
-    songs = load_songs("data/songs.csv") 
+    """Load songs, score them for a sample user, and print the top picks."""
+    songs = load_songs("data/songs.csv")
 
     # Starter example profile
     user_prefs = {"genre": "pop", "mood": "happy", "energy": 0.8}
