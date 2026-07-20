@@ -191,12 +191,12 @@ Because: energy 0.91 vs target 0.80 (+0.89)
   lofi) returned almost entirely different lists, confirming the scorer reacts to
   preferences rather than returning a fixed set.
 - **Shifted the weights (genre 2.0 → 1.0, energy 1.0 → 2.0).** The top pick barely
-  changed, but the score *gaps* compressed — a pure energy-match jumped from 0.99 to
-  1.98 for the pop user, making non-genre songs far more competitive. On this tiny
+  changed, but the score *gaps* compressed (a pure energy-match jumped from 0.99 to
+  1.98 for the pop user, making non-genre songs far more competitive). On this tiny
   catalog the change made results more *different* than clearly more *accurate*.
 - **Observed the "Gym Hero" effect.** Because a genre match is worth double a mood
   match, the intense workout track *Gym Hero* keeps ranking #2 for a user who just
-  wants happy pop — a sign the genre weight may be too strong for the catalog size.
+  wants happy pop, a sign the genre weight may be too strong for the catalog size.
 
 ---
 
@@ -205,15 +205,13 @@ Because: energy 0.91 vs target 0.80 (+0.89)
 - **Tiny, skewed catalog.** Only 10 songs, lightly weighted toward pop and lofi, so
   each genre has just one or two examples and there is little variety within a taste.
 - **Over-favors genre.** A genre match (+2.0) can beat a song that matches the user's
-  mood and energy but sits in another genre — great cross-genre picks get buried.
+  mood and energy but sits in another genre.
 - **Exact-match only.** "indie pop" earns zero genre points for a "pop" fan, and
-  "chill" ≠ "relaxed", so close-but-not-identical tastes are punished.
-- **No real understanding.** It reads labels and numbers only — it doesn't understand
+  "chill" ≠ "relaxed", so close (but not identical) tastes are punished.
+- **No real understanding.** It reads labels and numbers only and doesn't understand
   lyrics, language, or why a song *feels* a certain way.
 - **Filter-bubble risk.** It only rewards matching known taste, so it never surfaces
   anything new and can trap a listener in a narrow bubble.
-
-You will go deeper on this in your model card.
 
 ---
 
@@ -238,6 +236,3 @@ decides to weight most heavily gets amplified, underrepresented genres get ignor
 and users can be quietly funneled toward the same narrow set of songs. It changed how
 I think about the music apps I use every day — they're reflecting design choices,
 not truly understanding me.
-
-
-

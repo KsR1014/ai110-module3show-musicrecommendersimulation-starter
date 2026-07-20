@@ -220,7 +220,7 @@ Building this made it concrete that a recommender is really just "score everythi
 then sort" — there is no magic, only a scorecard and a ranking. The most interesting
 discovery was how much the **weights** quietly steer everything: because a genre
 match was worth double a mood match, a workout song kept surfacing for users who
-just wanted happy pop, and I never explicitly told it to do that — the weighting did.
+just wanted happy pop, and I never explicitly told it to do that; the weighting did.
 That changed how I think about the music apps I use every day: when a service keeps
 recommending the same kind of thing, it is probably not "understanding" me so much
 as reflecting whichever signals its designers decided to weight most heavily, which
